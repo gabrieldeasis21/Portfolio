@@ -7,8 +7,10 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 
 // --- 1. SETUP & PRELOADS ---
 extend({ MeshLineGeometry, MeshLineMaterial })
-useGLTF.preload('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/5huRVDzcoDwnbgrKUo1Lzs/53b6dd7d6b4ffcdbd338fa60265949e1/tag.glb')
-useTexture.preload('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/SOT1hmCesOHxEYxL7vkoZ/c57b29c85912047c414311723320c16b/band.jpg')
+
+// FIX: Now that the file is in public/3d/tag.glb, we can reference it directly
+useGLTF.preload('/assets/tag.glb')
+useTexture.preload('/assets/string.png')
 useTexture.preload('/assets/my-badge-photo.png')
 
 // --- 2. MAIN APP COMPONENT ---
@@ -22,9 +24,8 @@ export default function App() {
           entry.target.classList.add('active');
         }
       });
-    }, { threshold: 0.1 }); // Trigger when 10% visible
+    }, { threshold: 0.1 }); 
 
-    // Select all elements with class 'reveal'
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => observer.observe(el));
 
@@ -39,7 +40,6 @@ export default function App() {
         <a href="#intro" className="nav__link">INTRO</a>
         <a href="#about" className="nav__link">ABOUT ME</a>
         <a href="#services" className="nav__link">SERVICES</a>
-        <a href="#branding" className="nav__link">BRANDING</a>
         <a href="#archives" className="nav__link">ARCHIVES</a>
         <a href="#contact" className="nav__link">CONTACT</a>
       </nav>
@@ -115,9 +115,15 @@ export default function App() {
       </section>
 
       {/* 4. BRANDING (GALLERY) SECTION */}
-      <section id="branding" className="gallery">
-        <h2 className="section-title reveal">BRANDING</h2>
-        <div className="gallery__track reveal">
+      <section id="archives" className="gallery">
+         <img 
+            src="/assets/archive.png" 
+            alt="Archive" 
+            className="archive__image reveal" 
+        />
+        <h2 className="section-title reveal">ARCHIVES</h2>
+        
+        <div className="gallery__track reveal"> 
             {[
               { id: '01', bg: 'linear-gradient(135deg, #1a1a2e, #16213e)' },
               { id: '02', bg: 'linear-gradient(135deg, #0f0f23, #1a1a3e)' },
@@ -132,15 +138,6 @@ export default function App() {
               </div>
             ))}
         </div>
-      </section>
-
-      {/* 5. ARCHIVES SECTION */}
-      <section id="archives" className="archive-section">
-        <img 
-            src="/assets/archive.png" 
-            alt="Archive" 
-            className="archive__image reveal" 
-        />
       </section>
 
       {/* 6. CONTACT SECTION */}
@@ -198,14 +195,13 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3()
   const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2, linearDamping: 2 }
   
-  const { nodes, materials } = useGLTF('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/5huRVDzcoDwnbgrKUo1Lzs/53b6dd7d6b4ffcdbd338fa60265949e1/tag.glb')
-  const texture = useTexture('https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/SOT1hmCesOHxEYxL7vkoZ/c57b29c85912047c414311723320c16b/band.jpg')
+  // FIX: Use the direct public path string
+  const { nodes, materials } = useGLTF('/assets/tag.glb')
   
-  // Custom Photo
+  const texture = useTexture('/assets/string.png')
   const myProfilePic = useTexture('/assets/my-badge-photo.png')
   myProfilePic.flipY = false 
   
-  // Responsive Logic for Position
   const { width, height } = useThree((state) => state.viewport)
   
   const isMobile = width < 7;
@@ -216,7 +212,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   const [dragged, drag] = useState(false)
   const [hovered, hover] = useState(false)
 
-  // Rope joints (Length 1.2)
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1.2])
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1.2])
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1.2])
@@ -229,12 +224,9 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     }
   }, [hovered, dragged])
 
-  // --- FALL ANIMATION LOGIC ---
   useEffect(() => {
     if (fixed.current) {
-        // Set anchor
         fixed.current.setTranslation({ x: xPos, y: yPos, z: 0 })
-        // Teleport everything to TOP to fall down
         j1.current.setTranslation({ x: xPos, y: yPos, z: 0 })
         j2.current.setTranslation({ x: xPos, y: yPos, z: 0 })
         j3.current.setTranslation({ x: xPos, y: yPos, z: 0 })
