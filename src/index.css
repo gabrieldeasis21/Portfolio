@@ -8,15 +8,15 @@
    ======================================== */
 :root {
     /* Backgrounds */
-    --color-bg: #030303;        /* True Deep Black */
-    --color-bg-alt: #080808;    /* Subtle contrast for sections */
-    --color-bg-hero: #FFFEFC;   /* PRESERVED: Your Light Cream Hero */
+    --color-bg: #0C0C0C;        /* UPDATED: The specific Soft Black you requested */
+    --color-bg-alt: #161616;    /* Slightly lighter for contrast in sections */
+    --color-bg-hero: #FFFEFC;   /* Light Cream Hero */
 
     /* Typography */
-    --color-text-main: #f0f0f0; /* Soft White (easier on eyes than pure white) */
+    --color-text-main: #f0f0f0; /* Soft White */
     --color-text-muted: #888888; 
     
-    /* Borders & Accents - The "Hairline" feel */
+    /* Borders & Accents */
     --color-border: rgba(255, 255, 255, 0.06); 
     --color-border-hover: rgba(255, 255, 255, 0.2);
     
@@ -26,7 +26,7 @@
     --radius-lg: 12px;
     
     /* Animation */
-    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1); /* "Apple-style" smooth easing */
+    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ========================================
@@ -43,9 +43,9 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text-main);
-    line-height: 1.7; /* Increased line-height for elegance */
+    line-height: 1.7;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased; /* Crisp text on Mac */
+    -webkit-font-smoothing: antialiased;
 }
 
 a { 
@@ -56,7 +56,7 @@ a {
 
 img { display: block; max-width: 100%; }
 
-/* Custom Scrollbar (Minimalist) */
+/* Custom Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
@@ -77,7 +77,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* ========================================
-   5. NAVIGATION (FLOATING CAPSULE)
+   5. NAVIGATION
    ======================================== */
 .nav {
     position: fixed;
@@ -85,22 +85,16 @@ img { display: block; max-width: 100%; }
     left: 50%;
     transform: translateX(-50%);
     z-index: 999;
-    
     display: flex;
     align-items: center;
     gap: 3rem;
-    
-    /* Glassmorphism Capsule */
-    background: rgba(10, 10, 10, 0.7);
+    background: rgba(12, 12, 12, 0.7); /* Updated to match new black */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    
     padding: 1rem 3rem;
     border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    
-    /* Responsive Scroll for Mobile */
     max-width: 90vw;
     overflow-x: auto;
     scrollbar-width: none; 
@@ -120,7 +114,6 @@ img { display: block; max-width: 100%; }
 
 .nav__link:hover { color: #fff; }
 
-/* Tiny dot indicator on hover */
 .nav__link::after {
     content: '';
     position: absolute;
@@ -137,13 +130,13 @@ img { display: block; max-width: 100%; }
 }
 
 /* ========================================
-   6. HERO SECTION (PRESERVED)
+   6. HERO SECTION
    ======================================== */
 .hero {
     position: relative;
     height: 100vh;
     width: 100%;
-    background-color: var(--color-bg-hero); /* #FFFEFC */
+    background-color: var(--color-bg-hero);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -153,8 +146,8 @@ img { display: block; max-width: 100%; }
 .hero__logo {
     position: absolute;
     z-index: 1;
-    width: 85%;
-    max-width: 1100px;
+    width: 90%;
+    max-width: 2000px;
     height: auto;
     opacity: 0;
     animation: fadeIn 1.8s var(--ease-luxury) forwards;
@@ -172,14 +165,104 @@ img { display: block; max-width: 100%; }
     width: 100%;
     height: 100%;
     z-index: 10;
+    pointer-events: none; 
 }
 .badge-container canvas { 
     width: 100% !important; 
     height: 100% !important; 
+    pointer-events: auto; 
 }
 
 /* ========================================
-   7. TYPOGRAPHY & SECTIONS
+   7. CONTENTS SECTION (WHITE WITH ARRAY TEXT OVERLAY)
+   ======================================== */
+
+.contents-section {
+    background-color: #FFFFFF; 
+    line-height: 1.5; 
+    padding: 0; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+    margin-bottom: -1px; /* Prevents white line gap */
+}
+
+.contents-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    position: relative; /* Crucial for absolute positioning of text */
+    justify-content: center;
+    align-items: center;
+}
+
+.contents-image {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    display: block; 
+    mix-blend-mode: normal; 
+    object-fit: cover;
+}
+
+/* --- OVERLAY TEXT STYLES --- */
+/* --- OVERLAY TEXT STYLES --- */
+.contents-overlay {
+    position: absolute;
+    /* 1. Move Lower: Increased top from 50% to 65% */
+    top: 60%; 
+    /* 2. Move Left: Changed left from 50% to a fixed percentage from the left edge */
+    left: 8%; 
+    
+    /* Adjusted transform: Removed horizontal centering (-50%), kept vertical centering (-50%) relative to the new top position */
+    transform: translateY(-50%); 
+    
+    width: auto; /* Allow width to fit content instead of forcing 80% */
+    max-width: 90%;
+    
+    /* Align text to the left */
+    text-align: left;
+    z-index: 10;
+}
+
+.array-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Align flex items to the start (left) instead of center */
+    align-items: flex-start;
+}
+
+/* "ARRAY" FONT STYLE */
+.array-link {
+    font-family: 'Courier New', Courier, monospace; 
+    font-size: clamp(1.5rem, 4vw, 3.5rem); 
+    font-weight: 700;
+    color: #000; /* Black text */
+    text-decoration: none;
+    letter-spacing: -0.05em;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.9;
+}
+
+.array-link:hover {
+    opacity: 1;
+    letter-spacing: 0.02em; 
+    transform: scale(1.02);
+}
+
+.array-index {
+    color: #555; /* Slightly lighter brackets/numbers */
+    margin-right: 1rem;
+    font-weight: 400;
+}
+
+/* ========================================
+   8. TYPOGRAPHY & SECTIONS
    ======================================== */
 section {
     padding: clamp(6rem, 15vh, 10rem) 0;
@@ -188,7 +271,6 @@ section {
 
 .section-title {
     font-family: 'Space Grotesk', sans-serif;
-    /* Fluid Type: Scales between 3rem and 7rem depending on screen width */
     font-size: clamp(3rem, 10vw, 7rem); 
     font-weight: 700;
     letter-spacing: -0.04em;
@@ -196,7 +278,7 @@ section {
     margin-bottom: clamp(3rem, 8vh, 6rem);
     padding: 0 var(--gutter);
     color: #fff;
-    mix-blend-mode: exclusion; /* Makes text look blended with elements */
+    mix-blend-mode: exclusion;
 }
 
 /* --- ABOUT --- */
@@ -318,7 +400,6 @@ section {
     overflow: hidden; 
 }
 
-/* PRESERVED SIZE: Max 800px */
 .archive__image { 
     width: 100%; 
     max-width: 800px; 
@@ -367,29 +448,162 @@ section {
     color: rgba(255,255,255,0.05); 
 }
 
-/* --- CONTACT --- */
+/* ========================================
+   9. CONTACT FORM & GRID
+   ======================================== */
 .contact { 
     background: var(--color-bg); 
     padding-bottom: 6rem; 
 }
 
-.contact__grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    border-top: 1px solid var(--color-border); 
+.contact-container {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 5rem;
+    padding: 0 var(--gutter);
+}
+
+/* LEFT SIDE: FORM */
+.form-header {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding: 1rem 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    outline: none;
+    transition: border-color 0.4s ease;
+    border-radius: 0;
+}
+
+.form-input:focus {
+    border-bottom-color: #fff;
+}
+
+.form-textarea {
+    resize: none;
+    overflow: hidden;
+}
+
+.form-label {
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+    top: -1.2rem;
+    font-size: 0.75rem;
+    color: #fff;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.form-submit {
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    margin-top: 1rem;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.form-submit:hover { opacity: 1; }
+
+.form-submit .arrow {
+    transition: transform 0.3s ease;
+}
+
+.form-submit:hover .arrow {
+    transform: translateX(5px) translateY(-5px);
+}
+
+.form-success {
+    text-align: left;
+    padding: 2rem 0;
+}
+.success-message {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+.reset-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+/* RIGHT SIDE: CONTACT DETAILS */
+.details-header {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.details-list {
+    display: flex;
+    flex-direction: column;
 }
 
 .contact__item {
-    padding: 4rem var(--gutter); 
+    padding: 2rem 0; 
     border-bottom: 1px solid var(--color-border); 
-    border-right: 1px solid var(--color-border);
     display: flex; 
     flex-direction: column; 
-    gap: 0.75rem; 
-    transition: background 0.4s var(--ease-luxury);
+    gap: 0.5rem; 
+    transition: opacity 0.4s var(--ease-luxury);
 }
-
-.contact__item:hover { background: rgba(255,255,255,0.02); }
+.contact__item:hover { opacity: 0.7; }
 
 .contact__label { 
     color: var(--color-text-muted); 
@@ -397,10 +611,9 @@ section {
     letter-spacing: 0.1em; 
     text-transform: uppercase;
 }
-
 .contact__value { 
     font-family: 'Space Grotesk', sans-serif; 
-    font-size: 1.4rem; 
+    font-size: 1.25rem; 
     font-weight: 500;
 }
 
@@ -414,56 +627,39 @@ section {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     border-top: 1px solid rgba(255,255,255,0.03);
+    background: var(--color-bg);
 }
 
 /* ========================================
-   8. RESPONSIVE / MOBILE OPTIMIZATION
+   10. RESPONSIVE / MOBILE OPTIMIZATION
    ======================================== */
 @media (max-width: 1024px) {
-    .about__grid { 
-        grid-template-columns: 1fr; /* Stack into single column */
-        gap: 4rem; 
-    }
-    
-    .nav { 
-        top: 1.5rem;
-        gap: 2rem;
-        padding: 0.8rem 2rem;
-    }
+    .about__grid { grid-template-columns: 1fr; gap: 4rem; }
+    .nav { top: 1.5rem; gap: 2rem; padding: 0.8rem 2rem; }
+    .contact-container { grid-template-columns: 1fr; gap: 4rem; }
 }
 
 @media (max-width: 768px) {
     /* Responsive Navigation */
-    .nav { 
-        width: 92%; 
-        justify-content: flex-start; /* Left align for scroll */
-        padding: 1rem 1.5rem;
-    }
+    .nav { width: 92%; justify-content: flex-start; padding: 1rem 1.5rem; }
     
-    /* Hero Adjustments */
+    /* Hero */
     .hero__logo { width: 95%; } 
     
-    /* Responsive Text */
+    /* Typography */
     .section-title { margin-bottom: 3rem; }
     
-    /* Stack Contact Grid */
-    .contact__grid { grid-template-columns: 1fr; border-right: none; }
-    .contact__item { border-right: none; padding: 2.5rem var(--gutter); }
+    /* Contents */
+    .contents-section { padding: 0; }
+    .contents-image { width: 100%; }
+
+    /* Form */
+    .form-row { grid-template-columns: 1fr; gap: 3rem; }
     
-    /* Services Mobile */
-    .work-item__link { 
-        flex-direction: column; 
-        align-items: flex-start; 
-        gap: 1rem; 
-        padding: 2.5rem var(--gutter);
-    }
-    .work-item__number { 
-        align-self: flex-start; 
-        font-size: 0.9rem; 
-        opacity: 0.4; 
-        margin-bottom: 0.5rem;
-    }
+    /* Services */
+    .work-item__link { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 2.5rem var(--gutter); }
+    .work-item__number { align-self: flex-start; font-size: 0.9rem; opacity: 0.4; margin-bottom: 0.5rem; }
     
-    /* Gallery Mobile */
+    /* Gallery */
     .archive__image { width: 90%; }
 }

@@ -8,13 +8,24 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 // --- 1. SETUP & PRELOADS ---
 extend({ MeshLineGeometry, MeshLineMaterial })
 
-// FIX: Now that the file is in public/3d/tag.glb, we can reference it directly
 useGLTF.preload('/assets/tag.glb')
 useTexture.preload('/assets/string.png')
 useTexture.preload('/assets/my-badge-photo.png')
 
 // --- 2. MAIN APP COMPONENT ---
 export default function App() {
+
+  // --- FORM LOGIC ---
+  const [formState, setFormState] = useState('idle'); // 'idle', 'submitting', 'success'
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormState('submitting');
+    // Simulate sending data
+    setTimeout(() => {
+        setFormState('success');
+    }, 1500);
+  };
 
   // --- SCROLL ANIMATION LOGIC ---
   useEffect(() => {
@@ -38,6 +49,7 @@ export default function App() {
       {/* NAV */}
       <nav className="nav">
         <a href="#intro" className="nav__link">INTRO</a>
+        <a href="#contents" className="nav__link">CONTENTS</a>
         <a href="#about" className="nav__link">ABOUT ME</a>
         <a href="#services" className="nav__link">SERVICES</a>
         <a href="#archives" className="nav__link">ARCHIVES</a>
@@ -67,7 +79,36 @@ export default function App() {
         </div>
       </section>
 
-      {/* 2. ABOUT SECTION */}
+      {/* 2. CONTENTS SECTION (With Array Text Overlay) */}
+      <section id="contents" className="contents-section reveal">
+         <div className="contents-container">
+            <img 
+                src="/assets/contents.png" 
+                alt="Table of Contents" 
+                className="contents-image"
+            />
+            
+            {/* NEW: Text Overlay */}
+            <div className="contents-overlay">
+                <nav className="array-nav">
+                    <a href="#about" className="array-link">
+                        <span className="array-index">{'<1>'}</span> ABOUT ME
+                    </a>
+                    <a href="#services" className="array-link">
+                        <span className="array-index">{'<2>'}</span> SERVICES
+                    </a>
+                    <a href="#archives" className="array-link">
+                        <span className="array-index">{'<3>'}</span> ARCHIVES
+                    </a>
+                    <a href="#contact" className="array-link">
+                        <span className="array-index">{'<4>'}</span> CONTACT
+                    </a>
+                </nav>
+            </div>
+         </div>
+      </section>
+
+      {/* 3. ABOUT SECTION */}
       <section id="about" className="about">
         <h2 className="section-title reveal">ABOUT ME</h2>
         <div className="about__grid">
@@ -104,7 +145,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. SERVICES SECTION */}
+      {/* 4. SERVICES SECTION */}
       <section id="services" className="works">
         <h2 className="section-title reveal">SERVICES</h2>
         <div className="works__list reveal">
@@ -114,7 +155,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 4. BRANDING (GALLERY) SECTION */}
+      {/* 5. ARCHIVES / GALLERY SECTION */}
       <section id="archives" className="gallery">
          <img 
             src="/assets/archive.png" 
@@ -140,19 +181,66 @@ export default function App() {
         </div>
       </section>
 
-      {/* 6. CONTACT SECTION */}
+      {/* 6. CONTACT SECTION (With Form) */}
       <section id="contact" className="contact">
         <h2 className="section-title reveal">CONTACT</h2>
-        <div className="contact__grid reveal">
-            <ContactItem label="Email" value="VA.DEASISGABRIEL@GMAIL.COM" href="mailto:va.deasisgabriel@gmail.com" />
-            <ContactItem label="GitHub" value="@GABRIELDEASIS21" href="https://github.com/gabrieldeasis21" />
-            <ContactItem label="LinkedIn" value="GABRIEL DE ASIS" href="#" />
-            <ContactItem label="Upwork" value="GABRIEL DE ASIS" href="#" />
+        
+        <div className="contact-container reveal">
+            {/* Left Side: The Form */}
+            <div className="contact-form-wrapper">
+                <h3 className="form-header">LET'S START A PROJECT</h3>
+                
+                {formState === 'success' ? (
+                    <div className="form-success">
+                        <p className="success-message">Message received. I'll get back to you shortly.</p>
+                        <button onClick={() => setFormState('idle')} className="reset-btn">Send another</button>
+                    </div>
+                ) : (
+                    <form className="contact-form" onSubmit={handleSubmit}>
+                        <div className="form-row">
+                            <div className="form-group">
+                                <input type="text" id="name" required placeholder=" " className="form-input" />
+                                <label htmlFor="name" className="form-label">Name</label>
+                            </div>
+                            <div className="form-group">
+                                <input type="email" id="email" required placeholder=" " className="form-input" />
+                                <label htmlFor="email" className="form-label">Email</label>
+                            </div>
+                        </div>
+                        
+                        <div className="form-group">
+                            <input type="text" id="service" placeholder=" " className="form-input" />
+                            <label htmlFor="service" className="form-label">What service are you interested in?</label>
+                        </div>
+
+                        <div className="form-group">
+                            <textarea id="message" required placeholder=" " rows="1" className="form-input form-textarea"></textarea>
+                            <label htmlFor="message" className="form-label">Tell me about your project</label>
+                        </div>
+
+                        <button type="submit" className="form-submit" disabled={formState === 'submitting'}>
+                            {formState === 'submitting' ? 'SENDING...' : 'SEND MESSAGE'}
+                            <span className="arrow">↗</span>
+                        </button>
+                    </form>
+                )}
+            </div>
+
+            {/* Right Side: Contact Details */}
+            <div className="contact-details">
+                <h3 className="details-header">CONTACT DETAILS</h3>
+                <div className="details-list">
+                    <ContactItem label="Email" value="VA.DEASISGABRIEL@GMAIL.COM" href="mailto:va.deasisgabriel@gmail.com" />
+                    <ContactItem label="GitHub" value="@GABRIELDEASIS21" href="https://github.com/gabrieldeasis21" />
+                    <ContactItem label="LinkedIn" value="GABRIEL DE ASIS" href="#" />
+                    <ContactItem label="Upwork" value="GABRIEL DE ASIS" href="#" />
+                </div>
+            </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="footer">
+      <footer className="footer reveal">
         <a href="#" className="footer__logo">GDA© all rights reserved</a>
         <p className="footer__year">2026</p>
       </footer>
@@ -195,7 +283,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3()
   const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 2, linearDamping: 2 }
   
-  // FIX: Use the direct public path string
   const { nodes, materials } = useGLTF('/assets/tag.glb')
   
   const texture = useTexture('/assets/string.png')
@@ -271,7 +358,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     }
   })
 
-  curve.curveType = 'chordal'
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping
   const resolution = useMemo(() => new THREE.Vector2(width, height), [width, height])
 
