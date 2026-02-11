@@ -56,6 +56,15 @@
 
 .tools-carousel__item {
     flex-shrink: 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.tools-carousel__item img {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @-webkit-keyframes scroll {
