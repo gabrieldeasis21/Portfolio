@@ -154,17 +154,9 @@ export default function App() {
 
       {/* 4. SERVICES SECTION */}
       <section id="services" className="works">
-        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">SERVICES</h2>
-        <div className="works__list reveal">
-            <WorkItem title="Website Funnel Builder" category="Website building, CRM integration" num="01" />
-            <WorkItem title="General Virtual Assistant" category="Administrative support" num="02" />
-            <WorkItem title="Social Media Manager" category="Strategy & Content" num="03" />
-        </div>
-        
-        {/* Tools Infinite Carousel */}
-        <div className="tools-carousel mt-4 sm:mt-6 md:mt-8 lg:mt-10 py-1 overflow-hidden">
-          <div className="tools-carousel__wrapper">
-            {/* First set of tools */}
+        {/* Top Carousel Border */}
+        <div className="tools-carousel overflow-hidden">
+          <div className="tools-carousel__wrapper tools-carousel__wrapper--reverse">
             <div className="tools-carousel__track">
               {[
                 { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
@@ -176,12 +168,11 @@ export default function App() {
                 { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
                 { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
               ].map(tool => (
-                <div key={tool.id} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                <div key={`top-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
                   <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
                 </div>
               ))}
             </div>
-            {/* Duplicate set for seamless loop */}
             <div className="tools-carousel__track" aria-hidden="true">
               {[
                 { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
@@ -193,7 +184,52 @@ export default function App() {
                 { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
                 { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
               ].map(tool => (
-                <div key={`dup-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                <div key={`top-dup-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                  <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">SERVICES</h2>
+        <div className="works__list reveal">
+            <WorkItem title="Website Funnel Builder" category="Website building, CRM integration" num="01" />
+            <WorkItem title="General Virtual Assistant" category="Administrative support" num="02" />
+            <WorkItem title="Social Media Manager" category="Strategy & Content" num="03" />
+        </div>
+        
+        {/* Bottom Carousel Border */}
+        <div className="tools-carousel overflow-hidden">
+          <div className="tools-carousel__wrapper">
+            <div className="tools-carousel__track">
+              {[
+                { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
+                { id: 2, name: 'Tool 2', src: '/assets/SERVICES.png' },
+                { id: 3, name: 'Tool 3', src: '/assets/SERVICES.png' },
+                { id: 4, name: 'Tool 4', src: '/assets/SERVICES.png' },
+                { id: 5, name: 'Tool 5', src: '/assets/SERVICES.png' },
+                { id: 6, name: 'Tool 6', src: '/assets/SERVICES.png' },
+                { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
+                { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
+              ].map(tool => (
+                <div key={`btm-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                  <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
+                </div>
+              ))}
+            </div>
+            <div className="tools-carousel__track" aria-hidden="true">
+              {[
+                { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
+                { id: 2, name: 'Tool 2', src: '/assets/SERVICES.png' },
+                { id: 3, name: 'Tool 3', src: '/assets/SERVICES.png' },
+                { id: 4, name: 'Tool 4', src: '/assets/SERVICES.png' },
+                { id: 5, name: 'Tool 5', src: '/assets/SERVICES.png' },
+                { id: 6, name: 'Tool 6', src: '/assets/SERVICES.png' },
+                { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
+                { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
+              ].map(tool => (
+                <div key={`btm-dup-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
                   <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
                 </div>
               ))}

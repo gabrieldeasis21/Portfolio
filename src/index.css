@@ -16,6 +16,7 @@
     position: relative;
     padding: 0;
     background-color: #FFFEFC;
+    overflow: hidden;
 }
 
 .tools-carousel::before,
@@ -24,7 +25,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 100px;
+    width: 80px;
     z-index: 10;
     pointer-events: none;
 }
@@ -83,6 +84,34 @@
 .tools-carousel:hover .tools-carousel__wrapper {
     -webkit-animation-play-state: paused;
     animation-play-state: paused;
+}
+
+/* Reverse direction for top carousel */
+.tools-carousel__wrapper--reverse {
+    -webkit-animation: scroll-reverse 30s linear infinite !important;
+    animation: scroll-reverse 30s linear infinite !important;
+}
+
+@-webkit-keyframes scroll-reverse {
+    0% {
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes scroll-reverse {
+    0% {
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
 }
 
 /* ========================================
@@ -352,7 +381,7 @@ img { display: block; max-width: 100%; }
    8. TYPOGRAPHY & SECTIONS
    ======================================== */
 section {
-    padding: clamp(6rem, 15vh, 10rem) 0;
+    padding: clamp(6rem, 12vh, 10rem) 0;
     position: relative;
 }
 
@@ -362,14 +391,18 @@ section {
     font-weight: 700;
     letter-spacing: -0.04em;
     line-height: 1;
-    margin-bottom: clamp(3rem, 8vh, 6rem);
+    margin-bottom: clamp(2.5rem, 5vh, 4rem);
     padding: 0 var(--gutter);
     color: #fff;
     mix-blend-mode: exclusion;
 }
 
 /* --- ABOUT --- */
-.about { background: var(--color-bg); }
+.about { 
+    background: var(--color-bg);
+    padding-bottom: clamp(10rem, 18vh, 15rem);
+    scroll-margin-top: 80px;
+}
 
 .about__grid { 
     display: grid; 
@@ -434,17 +467,28 @@ section {
 }
 
 /* --- SERVICES (WORKS) --- */
-.works { background: var(--color-bg); }
+.works { 
+    background: var(--color-bg);
+    scroll-margin-top: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.works .section-title {
+    margin-top: clamp(4rem, 8vh, 6rem);
+    margin-bottom: clamp(2rem, 4vh, 3rem);
+}
 
 .works__list { 
-    border-top: 1px solid var(--color-border); 
+    border-top: 1px solid var(--color-border);
+    margin-bottom: clamp(4rem, 8vh, 6rem);
 }
 
 .work-item__link {
     display: flex; 
     justify-content: space-between; 
     align-items: baseline;
-    padding: 3.5rem var(--gutter); 
+    padding: 1.75rem var(--gutter); 
     border-bottom: 1px solid var(--color-border);
     transition: all 0.5s var(--ease-luxury);
     cursor: pointer;
@@ -482,15 +526,16 @@ section {
 
 /* --- ARCHIVES & GALLERY --- */
 .gallery { 
-    padding: 8rem 0; 
     background: var(--color-bg); 
-    overflow: hidden; 
+    overflow: hidden;
+    scroll-margin-top: 0;
+    padding-top: clamp(4rem, 8vh, 6rem);
 }
 
 .archive__image { 
     width: 100%; 
     max-width: 1500px; 
-    margin: 0 auto 6rem auto; 
+    margin: 0 auto 4rem auto; 
     height: auto; 
     opacity: 0.9; 
     transition: transform 0.8s var(--ease-luxury), opacity 0.5s; 
@@ -539,8 +584,8 @@ section {
    9. CONTACT FORM & GRID
    ======================================== */
 .contact { 
-    background: var(--color-bg); 
-    padding-bottom: 6rem; 
+    background: var(--color-bg);
+    scroll-margin-top: 80px;
 }
 
 .contact-container {
