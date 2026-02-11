@@ -1,3 +1,90 @@
+@import "tailwindcss";
+
+/* Custom utilities for scrollbar hiding */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* ========================================
+   INFINITE CAROUSEL ANIMATION
+   ======================================== */
+.tools-carousel {
+    position: relative;
+    padding: 0;
+    background-color: #FFFEFC;
+}
+
+.tools-carousel::before,
+.tools-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.tools-carousel::before {
+    left: 0;
+    background: linear-gradient(to right, #FFFEFC 0%, transparent 100%);
+}
+
+.tools-carousel::after {
+    right: 0;
+    background: linear-gradient(to left, #FFFEFC 0%, transparent 100%);
+}
+
+.tools-carousel__wrapper {
+    display: flex;
+    width: max-content;
+    -webkit-animation: scroll 30s linear infinite !important;
+    animation: scroll 30s linear infinite !important;
+}
+
+.tools-carousel__track {
+    display: flex;
+    gap: 3rem;
+    flex-shrink: 0;
+    padding-right: 3rem;
+}
+
+.tools-carousel__item {
+    flex-shrink: 0;
+}
+
+@-webkit-keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes scroll {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+    100% {
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+    }
+}
+
+/* Pause on hover for better UX */
+.tools-carousel:hover .tools-carousel__wrapper {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused;
+}
+
 /* ========================================
    1. FONTS & IMPORTS
    ======================================== */
@@ -9,7 +96,7 @@
 :root {
     /* Backgrounds */
     --color-bg: #0C0C0C;        /* UPDATED: The specific Soft Black you requested */
-    --color-bg-alt: #161616;    /* Slightly lighter for contrast in sections */
+    --color-bg-alt: rgba(255,255,255,0.05);    /* Slightly lighter for contrast in sections */
     --color-bg-hero: #FFFEFC;   /* Light Cream Hero */
 
     /* Typography */
@@ -214,7 +301,7 @@ img { display: block; max-width: 100%; }
 .contents-overlay {
     position: absolute;
     /* 1. Move Lower: Increased top from 50% to 65% */
-    top: 60%; 
+    top: 75%; 
     /* 2. Move Left: Changed left from 50% to a fixed percentage from the left edge */
     left: 8%; 
     
@@ -282,7 +369,7 @@ section {
 }
 
 /* --- ABOUT --- */
-.about { background: var(--color-bg-alt); }
+.about { background: var(--color-bg); }
 
 .about__grid { 
     display: grid; 
@@ -396,13 +483,13 @@ section {
 /* --- ARCHIVES & GALLERY --- */
 .gallery { 
     padding: 8rem 0; 
-    background: var(--color-bg-alt); 
+    background: var(--color-bg); 
     overflow: hidden; 
 }
 
 .archive__image { 
     width: 100%; 
-    max-width: 800px; 
+    max-width: 1500px; 
     margin: 0 auto 6rem auto; 
     height: auto; 
     opacity: 0.9; 

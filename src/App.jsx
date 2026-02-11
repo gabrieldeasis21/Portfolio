@@ -47,21 +47,28 @@ export default function App() {
     <div className="app-container">
       
       {/* NAV */}
-      <nav className="nav">
+      <nav className="nav hidden sm:flex">
         <a href="#intro" className="nav__link">INTRO</a>
-        <a href="#contents" className="nav__link">CONTENTS</a>
         <a href="#about" className="nav__link">ABOUT ME</a>
         <a href="#services" className="nav__link">SERVICES</a>
         <a href="#archives" className="nav__link">ARCHIVES</a>
         <a href="#contact" className="nav__link">CONTACT</a>
       </nav>
 
+      {/* Mobile Nav */}
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-999 flex sm:hidden gap-2 bg-[rgba(12,12,12,0.7)] backdrop-blur-xl px-4 py-2 rounded-full border border-white/10 shadow-lg overflow-x-auto max-w-[92vw] scrollbar-hide">
+        <a href="#about" className="nav__link whitespace-nowrap text-xs">ABOUT</a>
+        <a href="#services" className="nav__link whitespace-nowrap text-xs">SERVICES</a>
+        <a href="#archives" className="nav__link whitespace-nowrap text-xs">ARCHIVES</a>
+        <a href="#contact" className="nav__link whitespace-nowrap text-xs">CONTACT</a>
+      </nav>
+
       {/* 1. INTRO / HERO SECTION */}
-      <section id="intro" className="hero">
+      <section id="intro" className="hero min-h-screen w-full">
         <img 
             src="/assets/portfolio_text.png" 
             alt="Gabriel De Asis" 
-            className="hero__logo"
+            className="hero__logo w-[95%] sm:w-[90%] md:w-[85%] max-w-500"
         />
         <div className="badge-container">
           <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
@@ -89,18 +96,18 @@ export default function App() {
             />
             
             {/* NEW: Text Overlay */}
-            <div className="contents-overlay">
-                <nav className="array-nav">
-                    <a href="#about" className="array-link">
+            <div className="contents-overlay absolute top-1/2 md:top-[60%] left-4 sm:left-6 md:left-[8%] -translate-y-1/2 z-10 max-w-[90%]">
+                <nav className="array-nav flex flex-col gap-3 sm:gap-4 md:gap-6 items-start">
+                    <a href="#about" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<1>'}</span> ABOUT ME
                     </a>
-                    <a href="#services" className="array-link">
+                    <a href="#services" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<2>'}</span> SERVICES
                     </a>
-                    <a href="#archives" className="array-link">
+                    <a href="#archives" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<3>'}</span> ARCHIVES
                     </a>
-                    <a href="#contact" className="array-link">
+                    <a href="#contact" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<4>'}</span> CONTACT
                     </a>
                 </nav>
@@ -109,19 +116,19 @@ export default function App() {
       </section>
 
       {/* 3. ABOUT SECTION */}
-      <section id="about" className="about">
-        <h2 className="section-title reveal">ABOUT ME</h2>
-        <div className="about__grid">
-            <div className="about__column about__column--bio reveal">
+      <section id="about" className="about py-16 sm:py-20 md:py-24 lg:py-32">
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)] mb-8 md:mb-12 lg:mb-16 px-4 md:px-8 lg:px-(--gutter)">ABOUT ME</h2>
+        <div className="about__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] gap-8 lg:gap-12 xl:gap-16 px-4 md:px-8 lg:px-(--gutter)">
+            <div className="about__column about__column--bio reveal md:col-span-2 lg:col-span-1">
                 <h3 className="about__label">HI I'M</h3>
-                <div className="about__name-large">
+                <div className="about__name-large text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,5vw,4.5rem)]">
                     <span>Gabriel</span>
                     <span>De Asis</span>
                 </div>
-                <p className="about__text">
+                <p className="about__text text-sm sm:text-base md:text-lg">
                     Your Digital Transformation Partner, specialized in optimizing business processes and enhancing online presence.
                 </p>
-                <p className="about__text">
+                <p className="about__text text-sm sm:text-base md:text-lg">
                     My approach combines technical expertise with business acumen to deliver solutions that drive real results.
                 </p>
             </div>
@@ -147,11 +154,51 @@ export default function App() {
 
       {/* 4. SERVICES SECTION */}
       <section id="services" className="works">
-        <h2 className="section-title reveal">SERVICES</h2>
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">SERVICES</h2>
         <div className="works__list reveal">
             <WorkItem title="Website Funnel Builder" category="Website building, CRM integration" num="01" />
             <WorkItem title="General Virtual Assistant" category="Administrative support" num="02" />
             <WorkItem title="Social Media Manager" category="Strategy & Content" num="03" />
+        </div>
+        
+        {/* Tools Infinite Carousel */}
+        <div className="tools-carousel mt-4 sm:mt-6 md:mt-8 lg:mt-10 py-1 overflow-hidden">
+          <div className="tools-carousel__wrapper">
+            {/* First set of tools */}
+            <div className="tools-carousel__track">
+              {[
+                { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
+                { id: 2, name: 'Tool 2', src: '/assets/SERVICES.png' },
+                { id: 3, name: 'Tool 3', src: '/assets/SERVICES.png' },
+                { id: 4, name: 'Tool 4', src: '/assets/SERVICES.png' },
+                { id: 5, name: 'Tool 5', src: '/assets/SERVICES.png' },
+                { id: 6, name: 'Tool 6', src: '/assets/SERVICES.png' },
+                { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
+                { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
+              ].map(tool => (
+                <div key={tool.id} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                  <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
+                </div>
+              ))}
+            </div>
+            {/* Duplicate set for seamless loop */}
+            <div className="tools-carousel__track" aria-hidden="true">
+              {[
+                { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
+                { id: 2, name: 'Tool 2', src: '/assets/SERVICES.png' },
+                { id: 3, name: 'Tool 3', src: '/assets/SERVICES.png' },
+                { id: 4, name: 'Tool 4', src: '/assets/SERVICES.png' },
+                { id: 5, name: 'Tool 5', src: '/assets/SERVICES.png' },
+                { id: 6, name: 'Tool 6', src: '/assets/SERVICES.png' },
+                { id: 7, name: 'Tool 7', src: '/assets/SERVICES.png' },
+                { id: 8, name: 'Tool 8', src: '/assets/SERVICES.png' },
+              ].map(tool => (
+                <div key={`dup-${tool.id}`} className="tools-carousel__item w-24 h-10 sm:w-32 sm:h-12 md:w-40 md:h-14 lg:w-48 lg:h-16 opacity-70">
+                  <img src={tool.src} alt={tool.name} className="w-full h-full object-contain" />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -160,11 +207,11 @@ export default function App() {
          <img 
             src="/assets/archive.png" 
             alt="Archive" 
-            className="archive__image reveal" 
+            className="archive__image reveal w-[90%] md:w-[80%] lg:w-full" 
         />
-        <h2 className="section-title reveal">ARCHIVES</h2>
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">ARCHIVES</h2>
         
-        <div className="gallery__track reveal"> 
+        <div className="gallery__track reveal flex gap-4 md:gap-6 lg:gap-8 px-4 md:px-8 lg:px-(--gutter) overflow-x-auto pb-6 scrollbar-hide"> 
             {[
               { id: '01', bg: 'linear-gradient(135deg, #1a1a2e, #16213e)' },
               { id: '02', bg: 'linear-gradient(135deg, #0f0f23, #1a1a3e)' },
@@ -172,7 +219,7 @@ export default function App() {
               { id: '04', bg: 'linear-gradient(135deg, #0a1a1a, #1a3a3a)' },
               { id: '05', bg: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }
             ].map(item => (
-              <div className="gallery__item" key={item.id}>
+              <div className="gallery__item min-w-65 sm:min-w-70 md:min-w-80" key={item.id}>
                 <div className="gallery__image" style={{ background: item.bg }}>
                     <span className="gallery__placeholder">{item.id}</span>
                 </div>
@@ -183,42 +230,42 @@ export default function App() {
 
       {/* 6. CONTACT SECTION (With Form) */}
       <section id="contact" className="contact">
-        <h2 className="section-title reveal">CONTACT</h2>
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">CONTACT</h2>
         
-        <div className="contact-container reveal">
+        <div className="contact-container grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-12 xl:gap-20 px-4 md:px-8 lg:px-(--gutter) reveal">
             {/* Left Side: The Form */}
             <div className="contact-form-wrapper">
-                <h3 className="form-header">LET'S START A PROJECT</h3>
+                <h3 className="form-header text-lg sm:text-xl md:text-2xl mb-6 sm:mb-8 md:mb-10">LET'S START A PROJECT</h3>
                 
                 {formState === 'success' ? (
                     <div className="form-success">
-                        <p className="success-message">Message received. I'll get back to you shortly.</p>
-                        <button onClick={() => setFormState('idle')} className="reset-btn">Send another</button>
+                        <p className="success-message text-lg sm:text-xl md:text-2xl">Message received. I'll get back to you shortly.</p>
+                        <button onClick={() => setFormState('idle')} className="reset-btn text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3">Send another</button>
                     </div>
                 ) : (
-                    <form className="contact-form" onSubmit={handleSubmit}>
-                        <div className="form-row">
+                    <form className="contact-form flex flex-col gap-6 md:gap-8" onSubmit={handleSubmit}>
+                        <div className="form-row grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
                             <div className="form-group">
-                                <input type="text" id="name" required placeholder=" " className="form-input" />
-                                <label htmlFor="name" className="form-label">Name</label>
+                                <input type="text" id="name" required placeholder=" " className="form-input text-base sm:text-lg" />
+                                <label htmlFor="name" className="form-label text-sm sm:text-base">Name</label>
                             </div>
                             <div className="form-group">
-                                <input type="email" id="email" required placeholder=" " className="form-input" />
-                                <label htmlFor="email" className="form-label">Email</label>
+                                <input type="email" id="email" required placeholder=" " className="form-input text-base sm:text-lg" />
+                                <label htmlFor="email" className="form-label text-sm sm:text-base">Email</label>
                             </div>
                         </div>
                         
                         <div className="form-group">
-                            <input type="text" id="service" placeholder=" " className="form-input" />
-                            <label htmlFor="service" className="form-label">What service are you interested in?</label>
+                            <input type="text" id="service" placeholder=" " className="form-input text-base sm:text-lg" />
+                            <label htmlFor="service" className="form-label text-sm sm:text-base">What service are you interested in?</label>
                         </div>
 
                         <div className="form-group">
-                            <textarea id="message" required placeholder=" " rows="1" className="form-input form-textarea"></textarea>
-                            <label htmlFor="message" className="form-label">Tell me about your project</label>
+                            <textarea id="message" required placeholder=" " rows="1" className="form-input form-textarea text-base sm:text-lg"></textarea>
+                            <label htmlFor="message" className="form-label text-sm sm:text-base">Tell me about your project</label>
                         </div>
 
-                        <button type="submit" className="form-submit" disabled={formState === 'submitting'}>
+                        <button type="submit" className="form-submit text-base sm:text-lg md:text-xl" disabled={formState === 'submitting'}>
                             {formState === 'submitting' ? 'SENDING...' : 'SEND MESSAGE'}
                             <span className="arrow">↗</span>
                         </button>
@@ -227,8 +274,8 @@ export default function App() {
             </div>
 
             {/* Right Side: Contact Details */}
-            <div className="contact-details">
-                <h3 className="details-header">CONTACT DETAILS</h3>
+            <div className="contact-details mt-8 lg:mt-0">
+                <h3 className="details-header text-xs sm:text-sm">CONTACT DETAILS</h3>
                 <div className="details-list">
                     <ContactItem label="Email" value="VA.DEASISGABRIEL@GMAIL.COM" href="mailto:va.deasisgabriel@gmail.com" />
                     <ContactItem label="GitHub" value="@GABRIELDEASIS21" href="https://github.com/gabrieldeasis21" />
@@ -240,9 +287,9 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="footer reveal">
-        <a href="#" className="footer__logo">GDA© all rights reserved</a>
-        <p className="footer__year">2026</p>
+      <footer className="footer reveal flex flex-col sm:flex-row items-center justify-between gap-4 py-6 sm:py-8 px-4 md:px-8 lg:px-(--gutter)">
+        <a href="#" className="footer__logo text-xs sm:text-sm">GDA© all rights reserved</a>
+        <p className="footer__year text-xs sm:text-sm">2026</p>
       </footer>
 
     </div>
@@ -252,28 +299,28 @@ export default function App() {
 // --- 3. HELPER COMPONENTS ---
 const WorkItem = ({ title, category, num }) => (
   <article className="work-item">
-    <a href="#" className="work-item__link">
-      <div className="work-item__info">
-        <h3 className="work-item__title">{title}</h3>
-        <p className="work-item__category">{category}</p>
+    <a href="#" className="work-item__link flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-2 sm:gap-4 py-6 sm:py-8 md:py-10 lg:py-14 px-4 md:px-8 lg:px-(--gutter)">
+      <div className="work-item__info order-2 sm:order-1">
+        <h3 className="work-item__title text-xl sm:text-2xl md:text-3xl lg:text-[clamp(2rem,5vw,3.5rem)]">{title}</h3>
+        <p className="work-item__category text-sm sm:text-base">{category}</p>
       </div>
-      <span className="work-item__number">{num}</span>
+      <span className="work-item__number order-1 sm:order-2 text-sm sm:text-base">{num}</span>
     </a>
   </article>
 )
 
 const TimelineItem = ({ year, title, place }) => (
-  <div className="timeline__item">
-    <span className="timeline__year">{year}</span>
-    <p className="timeline__title">{title}</p>
-    <p className="timeline__place">{place}</p>
+  <div className="timeline__item flex flex-col gap-1">
+    <span className="timeline__year text-xs sm:text-sm">{year}</span>
+    <p className="timeline__title text-base sm:text-lg md:text-xl">{title}</p>
+    <p className="timeline__place text-xs sm:text-sm">{place}</p>
   </div>
 )
 
 const ContactItem = ({ label, value, href }) => (
-  <a href={href} className="contact__item" target="_blank" rel="noreferrer">
-    <span className="contact__label">{label}: </span>
-    <span className="contact__value">{value}</span>
+  <a href={href} className="contact__item py-4 sm:py-6 md:py-8" target="_blank" rel="noreferrer">
+    <span className="contact__label text-xs sm:text-sm">{label}: </span>
+    <span className="contact__value text-base sm:text-lg md:text-xl lg:text-2xl">{value}</span>
   </a>
 )
 
@@ -285,9 +332,23 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   
   const { nodes, materials } = useGLTF('/assets/tag.glb')
   
-  const texture = useTexture('/assets/string.png')
-  const myProfilePic = useTexture('/assets/my-badge-photo.png')
-  myProfilePic.flipY = false 
+  const stringTexture = useTexture('/assets/string.png')
+  const profileTexture = useTexture('/assets/my-badge-photo.png')
+  
+  // Clone and configure textures to avoid modifying hook return values
+  const texture = useMemo(() => {
+    const cloned = stringTexture.clone()
+    cloned.wrapS = cloned.wrapT = THREE.RepeatWrapping
+    cloned.needsUpdate = true
+    return cloned
+  }, [stringTexture])
+  
+  const myProfilePic = useMemo(() => {
+    const cloned = profileTexture.clone()
+    cloned.flipY = false
+    cloned.needsUpdate = true
+    return cloned
+  }, [profileTexture]) 
   
   const { width, height } = useThree((state) => state.viewport)
   
@@ -358,7 +419,6 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
     }
   })
 
-  texture.wrapS = texture.wrapT = THREE.RepeatWrapping
   const resolution = useMemo(() => new THREE.Vector2(width, height), [width, height])
 
   return (
