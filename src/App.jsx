@@ -1,9 +1,14 @@
 import * as THREE from 'three'
-import { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
+import ProfileCard from './components/ProfileCard'
+import ToolsSection from './components/ToolsSection'
+import { AnimatedTextGenerate } from './components/AnimatedTextGenerate'
+import { Github, Linkedin, Globe } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 // --- 1. SETUP & PRELOADS ---
 extend({ MeshLineGeometry, MeshLineMaterial })
@@ -12,8 +17,21 @@ useGLTF.preload('/assets/tag.glb')
 useTexture.preload('/assets/string.png')
 useTexture.preload('/assets/my-badge-photo.png')
 
+// Error boundary for WebGL/Canvas failures
+class CanvasErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { hasError: false, error: null }; }
+  static getDerivedStateFromError(error) { return { hasError: true, error }; }
+  componentDidCatch(error, info) { console.error('Canvas/WebGL error:', error, info); }
+  render() {
+    if (this.state.hasError) return this.props.fallback || null;
+    return this.props.children;
+  }
+}
+
 // --- 2. MAIN APP COMPONENT ---
 export default function App() {
+
+  const [expandedService, setExpandedService] = useState(null);
 
   // --- FORM LOGIC ---
   const [formState, setFormState] = useState('idle'); // 'idle', 'submitting', 'success'
@@ -47,20 +65,12 @@ export default function App() {
     <div className="app-container">
       
       {/* NAV */}
-      <nav className="nav hidden sm:flex">
-        <a href="#intro" className="nav__link">INTRO</a>
-        <a href="#about" className="nav__link">ABOUT ME</a>
-        <a href="#services" className="nav__link">SERVICES</a>
-        <a href="#archives" className="nav__link">ARCHIVES</a>
-        <a href="#contact" className="nav__link">CONTACT</a>
-      </nav>
-
-      {/* Mobile Nav */}
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-999 flex sm:hidden gap-2 bg-[rgba(12,12,12,0.7)] backdrop-blur-xl px-4 py-2 rounded-full border border-white/10 shadow-lg overflow-x-auto max-w-[92vw] scrollbar-hide">
-        <a href="#about" className="nav__link whitespace-nowrap text-xs">ABOUT</a>
-        <a href="#services" className="nav__link whitespace-nowrap text-xs">SERVICES</a>
-        <a href="#archives" className="nav__link whitespace-nowrap text-xs">ARCHIVES</a>
-        <a href="#contact" className="nav__link whitespace-nowrap text-xs">CONTACT</a>
+      <nav className="nav">
+        <a href="#intro" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('intro')?.scrollIntoView({ behavior: 'smooth' }); }}>Intro</a>
+        <a href="#about" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About</a>
+        <a href="#services" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}>Services</a>
+        <a href="#creative-work" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('creative-work')?.scrollIntoView({ behavior: 'smooth' }); }}>Creative Work</a>
+        <a href="#contact" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact</a>
       </nav>
 
       {/* 1. INTRO / HERO SECTION */}
@@ -71,6 +81,7 @@ export default function App() {
             className="hero__logo w-[95%] sm:w-[90%] md:w-[85%] max-w-500"
         />
         <div className="badge-container">
+          <CanvasErrorBoundary fallback={<div className="w-full h-full" />}>
           <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
             <ambientLight intensity={Math.PI} />
             <Physics interpolate gravity={[0, -40, 0]} timeStep={1 / 60}>
@@ -83,6 +94,7 @@ export default function App() {
               <Lightformer intensity={10} color="white" position={[-10, 0, 14]} rotation={[0, Math.PI / 2, Math.PI / 3]} scale={[100, 10, 1]} />
             </Environment>
           </Canvas>
+          </CanvasErrorBoundary>
         </div>
       </section>
 
@@ -104,8 +116,8 @@ export default function App() {
                     <a href="#services" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<2>'}</span> SERVICES
                     </a>
-                    <a href="#archives" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
-                        <span className="array-index">{'<3>'}</span> ARCHIVES
+                    <a href="#creative-work" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
+                        <span className="array-index">{'<3>'}</span> CREATIVE WORK
                     </a>
                     <a href="#contact" className="array-link text-lg sm:text-xl md:text-2xl lg:text-[clamp(1.5rem,4vw,3.5rem)]">
                         <span className="array-index">{'<4>'}</span> CONTACT
@@ -118,7 +130,29 @@ export default function App() {
       {/* 3. ABOUT SECTION */}
       <section id="about" className="about py-16 sm:py-20 md:py-24 lg:py-32">
         <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)] mb-8 md:mb-12 lg:mb-16 px-4 md:px-8 lg:px-(--gutter)">ABOUT ME</h2>
-        <div className="about__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] gap-8 lg:gap-12 xl:gap-16 px-4 md:px-8 lg:px-(--gutter)">
+        <div className="about__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[auto_1.5fr_1fr_1fr] items-start gap-10 lg:gap-14 xl:gap-18 px-4 md:px-8 lg:px-(--gutter)">
+            {/* Profile Card */}
+            <div className="reveal flex items-start justify-center md:col-span-2 lg:col-span-1 lg:row-span-1 lg:sticky lg:top-32">
+              <ProfileCard
+                img="/assets/my-badge-photo.png"
+                name="Gabriel De Asis"
+                position="Digital Transformation Partner"
+                bio="Specialized in optimizing business processes and enhancing online presence through technical expertise and business acumen."
+                spotlight
+                spotlightColor="59,130,246"
+                skills={[
+                  { name: 'React', icon: Globe },
+                  { name: 'JavaScript', icon: Globe },
+                  { name: 'UI/UX', icon: Globe },
+                  { name: 'Branding', icon: Globe },
+                ]}
+                socialLinks={[
+                  { name: 'GitHub', url: 'https://github.com', icon: Github },
+                  { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
+                ]}
+              />
+            </div>
+
             <div className="about__column about__column--bio reveal md:col-span-2 lg:col-span-1">
                 <h3 className="about__label">HI I'M</h3>
                 <div className="about__name-large text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,5vw,4.5rem)]">
@@ -151,6 +185,9 @@ export default function App() {
             </div>
         </div>
       </section>
+
+      {/* 3.5 TOOLS & TECHNOLOGIES SECTION */}
+      <ToolsSection />
 
       {/* 4. SERVICES SECTION */}
       <section id="services" className="works">
@@ -194,9 +231,45 @@ export default function App() {
 
         <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">SERVICES</h2>
         <div className="works__list reveal">
-            <WorkItem title="Website Funnel Builder" category="Website building, CRM integration" num="01" />
-            <WorkItem title="General Virtual Assistant" category="Administrative support" num="02" />
-            <WorkItem title="Social Media Manager" category="Strategy & Content" num="03" />
+            <WorkItem
+              title="WEBSITE FUNNEL BUILDER"
+              category="Website building, CRM integration"
+              num="01"
+              isExpanded={expandedService === 1}
+              onToggle={() => setExpandedService(expandedService === 1 ? null : 1)}
+              details={[
+                'Custom landing pages & sales funnels',
+                'CRM setup & automation workflows',
+                'Lead capture & email sequences',
+                'Analytics & conversion tracking',
+              ]}
+            />
+            <WorkItem
+              title="UI/UX DESIGNER"
+              category="Administrative support"
+              num="02"
+              isExpanded={expandedService === 2}
+              onToggle={() => setExpandedService(expandedService === 2 ? null : 2)}
+              details={[
+                'User research & persona mapping',
+                'Wireframing & interactive prototyping',
+                'Design systems & component libraries',
+                'Usability testing & iteration',
+              ]}
+            />
+            <WorkItem
+              title="BRANDING"
+              category="Strategy & Content"
+              num="03"
+              isExpanded={expandedService === 3}
+              onToggle={() => setExpandedService(expandedService === 3 ? null : 3)}
+              details={[
+                'Brand identity & logo design',
+                'Visual language & style guides',
+                'Social media assets & templates',
+                'Brand strategy & positioning',
+              ]}
+            />
         </div>
         
         {/* Bottom Carousel Border */}
@@ -238,30 +311,82 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. ARCHIVES / GALLERY SECTION */}
-      <section id="archives" className="gallery">
+      {/* 5. CREATIVE WORK / GALLERY SECTION */}
+      <section id="creative-work" className="gallery">
          <img 
             src="/assets/archive.png" 
-            alt="Archive" 
+            alt="Creative Work" 
             className="archive__image reveal w-[90%] md:w-[80%] lg:w-full" 
         />
-        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">ARCHIVES</h2>
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">CREATIVE WORK</h2>
         
-        <div className="gallery__track reveal flex gap-4 md:gap-6 lg:gap-8 px-4 md:px-8 lg:px-(--gutter) overflow-x-auto pb-6 scrollbar-hide"> 
-            {[
-              { id: '01', bg: 'linear-gradient(135deg, #1a1a2e, #16213e)' },
-              { id: '02', bg: 'linear-gradient(135deg, #0f0f23, #1a1a3e)' },
-              { id: '03', bg: 'linear-gradient(135deg, #1a0a2e, #2d1b4e)' },
-              { id: '04', bg: 'linear-gradient(135deg, #0a1a1a, #1a3a3a)' },
-              { id: '05', bg: 'linear-gradient(135deg, #1a1a1a, #2a2a2a)' }
-            ].map(item => (
-              <div className="gallery__item min-w-65 sm:min-w-70 md:min-w-80" key={item.id}>
-                <div className="gallery__image" style={{ background: item.bg }}>
-                    <span className="gallery__placeholder">{item.id}</span>
-                </div>
-              </div>
-            ))}
+        <div className="kinetic-gallery reveal">
+          {/* Edge fades */}
+          <div className="kinetic-gallery__fade kinetic-gallery__fade--left"></div>
+          <div className="kinetic-gallery__fade kinetic-gallery__fade--right"></div>
+
+          {/* Row 1 — scrolls left */}
+          <div className="kinetic-row">
+            <div className="kinetic-row__track kinetic-row__track--left">
+              {[...Array(2)].map((_, dupeIdx) => (
+                <React.Fragment key={`r1-${dupeIdx}`}>
+                  {[
+                    { id: 1, title: 'Brand Identity', desc: 'Visual identity & logo design', gradient: 'linear-gradient(135deg, #1a1a2e, #16213e)' },
+                    { id: 2, title: 'Dashboard UI', desc: 'Real-time analytics dashboard', gradient: 'linear-gradient(135deg, #0f0f23, #1a1a3e)' },
+                    { id: 3, title: 'E-Commerce Redesign', desc: 'Storefront conversion optimization', gradient: 'linear-gradient(135deg, #2d1b4e, #1a0a2e)' },
+                    { id: 4, title: 'Mobile App', desc: 'Cross-platform fitness tracker', gradient: 'linear-gradient(135deg, #0a1a1a, #1a3a3a)' },
+                    { id: 5, title: 'Landing Page', desc: 'High-converting SaaS page', gradient: 'linear-gradient(135deg, #1a1a1a, #333)' },
+                  ].map(p => (
+                    <div key={`r1-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ background: p.gradient }}>
+                      <div className="kinetic-card__number">{String(p.id).padStart(2, '0')}</div>
+                      <div className="kinetic-card__content">
+                        <h3 className="kinetic-card__title">{p.title}</h3>
+                        <p className="kinetic-card__desc">{p.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2 — scrolls right */}
+          <div className="kinetic-row">
+            <div className="kinetic-row__track kinetic-row__track--right">
+              {[...Array(2)].map((_, dupeIdx) => (
+                <React.Fragment key={`r2-${dupeIdx}`}>
+                  {[
+                    { id: 6, title: 'Marketing Site', desc: 'Creative agency with animations', gradient: 'linear-gradient(135deg, #1e1e3f, #2a1a4e)' },
+                    { id: 7, title: 'Portfolio Concept', desc: 'Minimal scroll-driven portfolio', gradient: 'linear-gradient(135deg, #141414, #262626)' },
+                    { id: 8, title: 'Social Platform', desc: 'Community with real-time messaging', gradient: 'linear-gradient(135deg, #0d1117, #161b22)' },
+                    { id: 9, title: 'Startup Pitch Deck', desc: 'Investor presentation design', gradient: 'linear-gradient(135deg, #1a0a1a, #2d1b3e)' },
+                    { id: 10, title: 'SaaS Dashboard', desc: 'Multi-tenant admin panel', gradient: 'linear-gradient(135deg, #0a0a1a, #1a1a3a)' },
+                  ].map(p => (
+                    <div key={`r2-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ background: p.gradient }}>
+                      <div className="kinetic-card__number">{String(p.id).padStart(2, '0')}</div>
+                      <div className="kinetic-card__content">
+                        <h3 className="kinetic-card__title">{p.title}</h3>
+                        <p className="kinetic-card__desc">{p.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
         </div>
+      </section>
+
+      {/* ANIMATED TEXT SECTION */}
+      <section style={{ padding: '8rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <AnimatedTextGenerate
+          text="Have a project in mind? Let's build something great together."
+          className="max-w-5xl"
+          textClassName=""
+          speed={1.2}
+          highlightWords={['great', 'together.']}
+          highlightClassName="text-blue-400"
+        />
       </section>
 
       {/* 6. CONTACT SECTION (With Form) */}
@@ -333,15 +458,69 @@ export default function App() {
 }
 
 // --- 3. HELPER COMPONENTS ---
-const WorkItem = ({ title, category, num }) => (
+const WorkItem = ({ title, category, isExpanded, onToggle, details = [] }) => (
   <article className="work-item">
-    <a href="#" className="work-item__link flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-2 sm:gap-4 py-6 sm:py-8 md:py-10 lg:py-14 px-4 md:px-8 lg:px-(--gutter)">
-      <div className="work-item__info order-2 sm:order-1">
-        <h3 className="work-item__title text-xl sm:text-2xl md:text-3xl lg:text-[clamp(2rem,5vw,3.5rem)]">{title}</h3>
-        <p className="work-item__category text-sm sm:text-base">{category}</p>
+    <motion.div
+      className="overflow-hidden cursor-pointer select-none"
+      style={{ borderBottom: '1px solid var(--color-border)' }}
+      onClick={(e) => { e.preventDefault(); e.stopPropagation(); onToggle(); }}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between py-8 sm:py-10 md:py-12 lg:py-16 group" style={{ padding: '2rem var(--gutter)' }}>
+        <div className="min-w-0 flex-1">
+          <h3 className="work-item__title">{title}</h3>
+          <p className="work-item__category">{category}</p>
+        </div>
+        <motion.div
+          animate={{ rotate: isExpanded ? 45 : 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="shrink-0 ml-4 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full transition-colors duration-500"
+          style={{
+            background: isExpanded ? 'rgba(255,255,255,0.08)' : 'transparent',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth="1" strokeLinecap="round" className="text-white/40" />
+            <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" strokeWidth="1" strokeLinecap="round" className="text-white/40" />
+          </svg>
+        </motion.div>
       </div>
-      <span className="work-item__number order-1 sm:order-2 text-sm sm:text-base">{num}</span>
-    </a>
+
+      {/* Expanded Content */}
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-10 sm:pb-12 md:pb-16 pt-2" style={{ paddingLeft: 'var(--gutter)', paddingRight: 'var(--gutter)' }}>
+              <div className="flex flex-col gap-1">
+                {details.map((detail, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    className="group/detail"
+                  >
+                    <span className="text-xl sm:text-2xl md:text-3xl text-white/50 group-hover/detail:text-white/90 transition-colors duration-500 font-light tracking-tight leading-relaxed">
+                      {detail}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   </article>
 )
 
