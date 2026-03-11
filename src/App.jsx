@@ -128,7 +128,7 @@ export default function App() {
       </section>
 
       {/* 3. ABOUT SECTION */}
-      <section id="about" className="about py-16 sm:py-20 md:py-24 lg:py-32">
+      <section id="about" className="about" style={{ padding: 'clamp(6rem, 10vh, 8rem) 0' }}>
         <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)] mb-8 md:mb-12 lg:mb-16 px-4 md:px-8 lg:px-(--gutter)">ABOUT ME</h2>
         <div className="about__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[auto_1.5fr_1fr_1fr] items-start gap-10 lg:gap-14 xl:gap-18 px-4 md:px-8 lg:px-(--gutter)">
             {/* Profile Card */}
@@ -378,7 +378,7 @@ export default function App() {
       </section>
 
       {/* ANIMATED TEXT SECTION */}
-      <section style={{ padding: '8rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <section style={{ padding: 'clamp(6rem, 10vh, 8rem) 2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <AnimatedTextGenerate
           text="Have a project in mind? Let's build something great together."
           className="max-w-5xl"

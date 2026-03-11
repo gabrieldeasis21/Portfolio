@@ -409,7 +409,6 @@ section {
 /* --- ABOUT --- */
 .about { 
     background: var(--color-bg);
-    padding-bottom: clamp(4rem, 8vh, 6rem);
     scroll-margin-top: 80px;
 }
 
@@ -477,19 +476,18 @@ section {
 /* --- SERVICES (WORKS) --- */
 .works { 
     background: var(--color-bg);
-    scroll-margin-top: 30px;
-    padding-top: 0;
-    padding-bottom: 0;
+    scroll-margin-top: 80px;
+    padding: 0;
 }
 
 .works .section-title {
-    margin-top: clamp(4rem, 8vh, 6rem);
+    margin-top: clamp(2rem, 4vh, 3rem);
     margin-bottom: clamp(2rem, 4vh, 3rem);
 }
 
 .works__list { 
     border-top: 1px solid var(--color-border);
-    margin-bottom: clamp(4rem, 8vh, 6rem);
+    margin-bottom: clamp(2rem, 4vh, 3rem);
 }
 
 .work-item__title { 
@@ -521,7 +519,7 @@ section {
     background: var(--color-bg); 
     overflow: hidden;
     scroll-margin-top: 0;
-    padding-top: clamp(4rem, 8vh, 6rem);
+    padding: clamp(6rem, 10vh, 8rem) 0;
 }
 
 .archive__image { 
@@ -936,7 +934,7 @@ section {
    ======================================== */
 .tools-section {
     background: var(--color-bg);
-    padding: clamp(4rem, 8vh, 6rem) 0;
+    padding: clamp(6rem, 10vh, 8rem) 0;
     position: relative;
     overflow: hidden;
 }
