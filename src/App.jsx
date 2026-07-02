@@ -7,6 +7,7 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import ProfileCard from './components/ProfileCard'
 import ToolsSection from './components/ToolsSection'
 import { AnimatedTextGenerate } from './components/AnimatedTextGenerate'
+import ScrollReveal from './components/ScrollReveal'
 import { Github, Linkedin, Globe } from 'lucide-react'
 import { AnimatePresence, motion } from 'framer-motion'
 
@@ -134,7 +135,7 @@ export default function App() {
             {/* Profile Card */}
             <div className="reveal flex items-start justify-center md:col-span-2 lg:col-span-1 lg:row-span-1 lg:sticky lg:top-32">
               <ProfileCard
-                img="/assets/my-badge-photo.png"
+                img="/assets/222211.jpg"
                 name="Gabriel De Asis"
                 position="Digital Transformation Partner"
                 bio="Specialized in optimizing business processes and enhancing online presence through technical expertise and business acumen."
@@ -159,12 +160,26 @@ export default function App() {
                     <span>Gabriel</span>
                     <span>De Asis</span>
                 </div>
-                <p className="about__text text-sm sm:text-base md:text-lg">
+                <ScrollReveal 
+                    baseOpacity={0.1} 
+                    enableBlur={true} 
+                    baseRotation={2}
+                    blurStrength={3}
+                    containerClassName="about__scroll-reveal"
+                    textClassName="about__text text-sm sm:text-base md:text-lg"
+                >
                     Your Digital Transformation Partner, specialized in optimizing business processes and enhancing online presence.
-                </p>
-                <p className="about__text text-sm sm:text-base md:text-lg">
+                </ScrollReveal>
+                <ScrollReveal 
+                    baseOpacity={0.1} 
+                    enableBlur={true} 
+                    baseRotation={2}
+                    blurStrength={3}
+                    containerClassName="about__scroll-reveal"
+                    textClassName="about__text text-sm sm:text-base md:text-lg"
+                >
                     My approach combines technical expertise with business acumen to deliver solutions that drive real results.
-                </p>
+                </ScrollReveal>
             </div>
 
             <div className="about__column about__column--education reveal">
@@ -270,6 +285,19 @@ export default function App() {
                 'Brand strategy & positioning',
               ]}
             />
+            <WorkItem
+              title="AI AUTOMATION"
+              category="Strategy & Content"
+              num="04"
+              isExpanded={expandedService === 4}
+              onToggle={() => setExpandedService(expandedService === 4 ? null : 4)}
+              details={[
+                'CRM automation & chatbots',
+                'Custom AI tools & scripts',
+                'Workflow optimization & integration',
+                'AI strategy consulting',
+              ]}
+            />
         </div>
         
         {/* Bottom Carousel Border */}
@@ -331,13 +359,14 @@ export default function App() {
               {[...Array(2)].map((_, dupeIdx) => (
                 <React.Fragment key={`r1-${dupeIdx}`}>
                   {[
-                    { id: 1, title: 'Brand Identity', desc: 'Visual identity & logo design', gradient: 'linear-gradient(135deg, #1a1a2e, #16213e)' },
-                    { id: 2, title: 'Dashboard UI', desc: 'Real-time analytics dashboard', gradient: 'linear-gradient(135deg, #0f0f23, #1a1a3e)' },
-                    { id: 3, title: 'E-Commerce Redesign', desc: 'Storefront conversion optimization', gradient: 'linear-gradient(135deg, #2d1b4e, #1a0a2e)' },
-                    { id: 4, title: 'Mobile App', desc: 'Cross-platform fitness tracker', gradient: 'linear-gradient(135deg, #0a1a1a, #1a3a3a)' },
-                    { id: 5, title: 'Landing Page', desc: 'High-converting SaaS page', gradient: 'linear-gradient(135deg, #1a1a1a, #333)' },
+                    { id: 1, title: 'Brand Identity', desc: 'Visual identity & logo design', image: '/assets/contents.png' },
+                    { id: 2, title: 'Dashboard UI', desc: 'Real-time analytics dashboard', image: '/assets/contents.png' },
+                    { id: 3, title: 'E-Commerce Redesign', desc: 'Storefront conversion optimization', image: '/assets/contents.png' },
+                    { id: 4, title: 'Mobile App', desc: 'Cross-platform fitness tracker', image: '/assets/contents.png' },
+                    { id: 5, title: 'Landing Page', desc: 'High-converting SaaS page', image: '/assets/contents.png' },
                   ].map(p => (
-                    <div key={`r1-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ background: p.gradient }}>
+                    <div key={`r1-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ backgroundImage: `url(${p.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                      <div className="kinetic-card__overlay"></div>
                       <div className="kinetic-card__number">{String(p.id).padStart(2, '0')}</div>
                       <div className="kinetic-card__content">
                         <h3 className="kinetic-card__title">{p.title}</h3>
@@ -356,13 +385,14 @@ export default function App() {
               {[...Array(2)].map((_, dupeIdx) => (
                 <React.Fragment key={`r2-${dupeIdx}`}>
                   {[
-                    { id: 6, title: 'Marketing Site', desc: 'Creative agency with animations', gradient: 'linear-gradient(135deg, #1e1e3f, #2a1a4e)' },
-                    { id: 7, title: 'Portfolio Concept', desc: 'Minimal scroll-driven portfolio', gradient: 'linear-gradient(135deg, #141414, #262626)' },
-                    { id: 8, title: 'Social Platform', desc: 'Community with real-time messaging', gradient: 'linear-gradient(135deg, #0d1117, #161b22)' },
-                    { id: 9, title: 'Startup Pitch Deck', desc: 'Investor presentation design', gradient: 'linear-gradient(135deg, #1a0a1a, #2d1b3e)' },
-                    { id: 10, title: 'SaaS Dashboard', desc: 'Multi-tenant admin panel', gradient: 'linear-gradient(135deg, #0a0a1a, #1a1a3a)' },
+                    { id: 6, title: 'Marketing Site', desc: 'Creative agency with animations', image: '/assets/contents.png' },
+                    { id: 7, title: 'Portfolio Concept', desc: 'Minimal scroll-driven portfolio', image: '/assets/contents.png' },
+                    { id: 8, title: 'Social Platform', desc: 'Community with real-time messaging', image: '/assets/contents.png' },
+                    { id: 9, title: 'Startup Pitch Deck', desc: 'Investor presentation design', image: '/assets/contents.png' },
+                    { id: 10, title: 'SaaS Dashboard', desc: 'Multi-tenant admin panel', image: '/assets/contents.png' },
                   ].map(p => (
-                    <div key={`r2-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ background: p.gradient }}>
+                    <div key={`r2-${dupeIdx}-${p.id}`} className="kinetic-card" style={{ backgroundImage: `url(${p.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                      <div className="kinetic-card__overlay"></div>
                       <div className="kinetic-card__number">{String(p.id).padStart(2, '0')}</div>
                       <div className="kinetic-card__content">
                         <h3 className="kinetic-card__title">{p.title}</h3>
