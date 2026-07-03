@@ -137,8 +137,8 @@ export default function App() {
               <ProfileCard
                 img="/assets/222211.jpg"
                 name="Gabriel De Asis"
-                position="Digital Transformation Partner"
-                bio="Specialized in optimizing business processes and enhancing online presence through technical expertise and business acumen."
+                position="Software, Cloud, and UI/UX Specialist"
+                bio="Specialized in building modern web applications, intuitive user interfaces, and cloud-based solutions that help businesses streamline workflows, strengthen their online presence, and achieve their goals."
                 spotlight
                 spotlightColor="59,130,246"
                 skills={[
@@ -148,8 +148,8 @@ export default function App() {
                   { name: 'Branding', icon: Globe },
                 ]}
                 socialLinks={[
-                  { name: 'GitHub', url: 'https://github.com', icon: Github },
-                  { name: 'LinkedIn', url: 'https://linkedin.com', icon: Linkedin },
+                  { name: 'GitHub', url: 'https://github.com/gabrieldeasis21', icon: Github },
+                  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/deasisgabriel', icon: Linkedin },
                 ]}
               />
             </div>
@@ -193,9 +193,9 @@ export default function App() {
             <div className="about__column about__column--career reveal">
                 <h3 className="about__label">EXPERIENCE</h3>
                 <div className="timeline">
-                    <TimelineItem year="2024-NOW" title="Freelance Consultant" place="REMOTE" />
-                    <TimelineItem year="2023-2024" title="System Administrator" place="TECH STARTUP" />
-                    <TimelineItem year="2022-2023" title="Digital Marketing Specialist" place="AGENCY" />
+                    <TimelineItem year="2026 - Present " title="Full-Stack Developer" place="CvSU Research Extension" />
+                    <TimelineItem year="2024 - 2025" title="UI/UX Designer" place="Remote" />
+                    <TimelineItem year="2023 - 2024" title="Social Media Manager" place="Kaffatea" />
                 </div>
             </div>
         </div>
@@ -247,55 +247,77 @@ export default function App() {
         <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">SERVICES</h2>
         <div className="works__list reveal">
             <WorkItem
-              title="WEBSITE FUNNEL BUILDER"
-              category="Website building, CRM integration"
+              title="UI/UX Design"
+              category="Design & Prototype"
               num="01"
               isExpanded={expandedService === 1}
               onToggle={() => setExpandedService(expandedService === 1 ? null : 1)}
               details={[
-                'Custom landing pages & sales funnels',
-                'CRM setup & automation workflows',
-                'Lead capture & email sequences',
-                'Analytics & conversion tracking',
+                '• Website UI Design',
+                '• Mobile App UI Design',
+                '• Wireframing',
+                '• Prototyping',
+                '• Design Systems',
               ]}
             />
             <WorkItem
-              title="UI/UX DESIGNER"
-              category="Administrative support"
+              title="Website Development"
+              category="Development & Deployment"
               num="02"
               isExpanded={expandedService === 2}
               onToggle={() => setExpandedService(expandedService === 2 ? null : 2)}
               details={[
-                'User research & persona mapping',
-                'Wireframing & interactive prototyping',
-                'Design systems & component libraries',
-                'Usability testing & iteration',
+                '• WordPress Development',
+                '• Shopify Development',
+                '• Landing Pages',
+                '• Business Websites',
+                '• Portfolio Websites',
+                '• Website Customization',
               ]}
             />
             <WorkItem
-              title="BRANDING"
-              category="Strategy & Content"
+              title="Cloud & Infrastructure"
+              category="Cloud Solutions"
               num="03"
               isExpanded={expandedService === 3}
               onToggle={() => setExpandedService(expandedService === 3 ? null : 3)}
               details={[
-                'Brand identity & logo design',
-                'Visual language & style guides',
-                'Social media assets & templates',
-                'Brand strategy & positioning',
+                '• Website Deployment',
+                '• Domain & DNS Configuration',
+                '• Cloud Hosting',
+                '• SSL Setup',
+                '• Website Migration',
+                '• Performance Optimization',
               ]}
             />
             <WorkItem
-              title="AI AUTOMATION"
-              category="Strategy & Content"
+              title="Technical Virtual Assistance"
+              category="Support"
               num="04"
               isExpanded={expandedService === 4}
               onToggle={() => setExpandedService(expandedService === 4 ? null : 4)}
               details={[
-                'CRM automation & chatbots',
-                'Custom AI tools & scripts',
-                'Workflow optimization & integration',
-                'AI strategy consulting',
+                '• Website Maintenance',
+                '• Content Management',
+                '• Technical Support',
+                '• Documentation',
+                '• Basic Automation',
+                '• Troubleshooting',
+              ]}
+            />
+             <WorkItem
+              title="E-commerce Virtual Assistance"
+              category="E-commerce"
+              num="05"
+              isExpanded={expandedService === 5}
+              onToggle={() => setExpandedService(expandedService === 5 ? null : 5)}
+              details={[
+                '• Shopify Store Management',
+                '• Product Listing',
+                '• Inventory Management',
+                '• Order Processing',
+                '• Customer Support',
+                '• Store Optimization',
               ]}
             />
         </div>
