@@ -70,7 +70,7 @@ export default function App() {
         <a href="#intro" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('intro')?.scrollIntoView({ behavior: 'smooth' }); }}>Intro</a>
         <a href="#about" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }); }}>About</a>
         <a href="#services" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }); }}>Services</a>
-        <a href="#creative-work" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('creative-work')?.scrollIntoView({ behavior: 'smooth' }); }}>Creative Work</a>
+        <a href="#creative-work" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('creative-work')?.scrollIntoView({ behavior: 'smooth' }); }}>Projects</a>
         <a href="#contact" className="nav__link" onClick={(e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}>Contact</a>
       </nav>
 
@@ -362,13 +362,13 @@ export default function App() {
       </section>
 
       {/* 5. CREATIVE WORK / GALLERY SECTION */}
-      <section id="creative-work" className="gallery">
+      <section id="Projects" className="gallery">
          <img 
             src="/assets/archive.png" 
             alt="Creative Work" 
             className="archive__image reveal w-[90%] md:w-[80%] lg:w-full" 
         />
-        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">CREATIVE WORK</h2>
+        <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">Projects</h2>
         
         <div className="kinetic-gallery reveal">
           {/* Edge fades */}
