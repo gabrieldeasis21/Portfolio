@@ -168,7 +168,7 @@ export default function App() {
                     containerClassName="about__scroll-reveal"
                     textClassName="about__text text-sm sm:text-base md:text-lg"
                 >
-                    Your Digital Transformation Partner, specialized in optimizing business processes and enhancing online presence.
+                    Your technology partner for building modern digital solutions, from intuitive user experiences to scalable web applications and cloud-based systems.
                 </ScrollReveal>
                 <ScrollReveal 
                     baseOpacity={0.1} 
@@ -178,15 +178,15 @@ export default function App() {
                     containerClassName="about__scroll-reveal"
                     textClassName="about__text text-sm sm:text-base md:text-lg"
                 >
-                    My approach combines technical expertise with business acumen to deliver solutions that drive real results.
+                    I combine software engineering, cloud technologies, UI/UX design, and technical virtual assistance to create solutions that improve workflows, strengthen your online presence, and support business growth.
                 </ScrollReveal>
             </div>
 
             <div className="about__column about__column--education reveal">
                 <h3 className="about__label">EDUCATIONAL BACKGROUND</h3>
                 <div className="timeline">
-                    <TimelineItem year="2023-2027" title="BS Computer Science" place="Cavite State University" />
-                    <TimelineItem year="2020-2023" title="STEM" place="National College of Science" />
+                    <TimelineItem year="2023 - Present" title="Bachelor Of Science in Computer Science" place="Cavite State University" />
+                    <TimelineItem year="2020 - 2023" title="Science, Technology, Engineering, and Mathematics" place="National College of Science & Technology" />
                 </div>
             </div>
 
