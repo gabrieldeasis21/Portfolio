@@ -30,6 +30,8 @@ class CanvasErrorBoundary extends React.Component {
 }
 
 // --- STATIC DATA ---
+const PLACEHOLDER_IMAGE = '/assets/contents.png'
+
 const CAROUSEL_TOOLS = [
   { id: 1, name: 'Tool 1', src: '/assets/SERVICES.png' },
   { id: 2, name: 'Tool 2', src: '/assets/SERVICES.png' },
@@ -48,72 +50,131 @@ const GALLERY_PROJECTS = [
     title: 'Brand Identity',
     desc: 'Visual identity & logo design for a boutique lifestyle brand. Covers wordmark, colour system, and brand guidelines.',
     tags: ['Branding', 'Figma'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 2,
     title: 'Dashboard UI',
     desc: 'Real-time analytics dashboard with configurable widgets, dark/light modes, and accessibility-first components.',
     tags: ['React', 'UI/UX'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 3,
     title: 'E-Commerce Redesign',
     desc: 'Storefront conversion-rate optimisation — restructured navigation, streamlined checkout, and a new product card system.',
     tags: ['Shopify', 'CRO'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 4,
     title: 'Mobile App',
     desc: 'Cross-platform fitness tracker with activity logging, progress charts, and social sharing. Built with React Native.',
     tags: ['React Native', 'Health'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 5,
     title: 'Landing Page',
     desc: 'High-converting SaaS landing page with scroll-based animations, feature breakdown, and integrated demo request form.',
     tags: ['Next.js', 'GSAP'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 6,
     title: 'Marketing Site',
     desc: 'Creative agency site with canvas-based particle background, parallax sections, and award-winning scroll experience.',
     tags: ['Three.js', 'GSAP'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 7,
     title: 'Portfolio Concept',
     desc: 'Minimal scroll-driven developer portfolio with custom cursor, magnetic buttons, and smooth page transitions.',
     tags: ['Next.js', 'Framer Motion'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 8,
     title: 'Social Platform',
     desc: 'Community platform with real-time messaging, threaded comments, notification feed, and granular privacy controls.',
     tags: ['React', 'Firebase'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 9,
     title: 'Startup Pitch Deck',
     desc: 'Investor presentation design system — slide templates, data visualisations, and interactive prototype for demo day.',
     tags: ['Figma', 'Motion'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
   {
     id: 10,
     title: 'SaaS Dashboard',
     desc: 'Multi-tenant admin panel with role-based access, audit logs, billing management, and a fully custom component library.',
     tags: ['React', 'TypeScript'],
-    image: '/assets/contents.png',
+    image: PLACEHOLDER_IMAGE,
   },
 ]
+
+const CERTIFICATIONS = [
+  {
+    id: 1,
+    issuer: 'Meta',
+    name: 'Meta Front-End Developer Professional Certificate',
+    year: '2024',
+    platform: 'Coursera',
+    image: '/assets/cert-meta.png',
+    href: '#',
+  },
+  {
+    id: 2,
+    issuer: 'Google',
+    name: 'Google UX Design Professional Certificate',
+    year: '2024',
+    platform: 'Coursera',
+    image: '/assets/cert-google.png',
+    href: '#',
+  },
+  {
+    id: 3,
+    issuer: 'AWS',
+    name: 'AWS Cloud Practitioner Essentials',
+    year: '2023',
+    platform: 'Amazon',
+    image: '/assets/cert-aws.png',
+    href: '#',
+  },
+  {
+    id: 4,
+    issuer: 'freeCodeCamp',
+    name: 'Responsive Web Design Certification',
+    year: '2023',
+    platform: 'fCC',
+    image: '/assets/cert-fcc.png',
+    href: '#',
+  },
+  {
+    id: 5,
+    issuer: 'Figma',
+    name: 'Figma Professional UI Design',
+    year: '2024',
+    platform: 'Figma',
+    image: '/assets/cert-figma.png',
+    href: '#',
+  },
+  {
+    id: 6,
+    issuer: 'Shopify',
+    name: 'Shopify Partner & Store Management',
+    year: '2025',
+    platform: 'Shopify',
+    image: '/assets/cert-shopify.png',
+    href: '#',
+  },
+]
+
+
 
 const GALLERY_ROW_1 = GALLERY_PROJECTS.slice(0, 5)
 const GALLERY_ROW_2 = GALLERY_PROJECTS.slice(5, 10)
@@ -298,9 +359,12 @@ function ProjectLightbox({ project, onClose }) {
         >
           <img
             ref={imgRef}
-            src={project.image}
+            src={project.image || PLACEHOLDER_IMAGE}
             alt={project.title}
             draggable={false}
+            onError={(e) => {
+              e.currentTarget.src = PLACEHOLDER_IMAGE
+            }}
             style={{
               display: 'block',
               width: '100%',
@@ -464,10 +528,13 @@ function KineticCard({ p, onOpen }) {
     >
       {/* Resolution-agnostic cover image */}
       <img
-        src={p.image}
+        src={p.image || PLACEHOLDER_IMAGE}
         alt=""
         aria-hidden="true"
         draggable={false}
+        onError={(e) => {
+          e.currentTarget.src = PLACEHOLDER_IMAGE
+        }}
         style={{
           position: 'absolute',
           inset: 0,
@@ -542,7 +609,8 @@ export default function App() {
           ['#intro', 'Intro'],
           ['#about', 'About'],
           ['#services', 'Services'],
-          ['#creative-work', 'Projects'],
+          ['#projects', 'Projects'],
+          ['#certifications', 'Certificates'],
           ['#contact', 'Contact'],
         ].map(([href, label]) => (
           <a
@@ -699,8 +767,72 @@ export default function App() {
         <Carousel />
       </section>
 
+    {/* 4.5 CERTIFICATIONS */}
+<section id="certifications" className="certifications">
+  <div className="certs-header reveal px-4 md:px-8 lg:px-(--gutter)">
+    <h2 className="section-title text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">
+      CERTIFICATIONS
+    </h2>
+    <p className="certs-subtitle">Credentials &amp; Achievements</p>
+  </div>
+
+  <div className="cert-grid reveal px-4 md:px-8 lg:px-(--gutter)">
+    {CERTIFICATIONS.map(({ id, issuer, name, year, platform, image, href }) => (
+      <a
+        key={id}
+        href={href || '#'}
+        target="_blank"
+        rel="noreferrer"
+        className="cert-card"
+        aria-label={`${name} — ${issuer}, ${year}`}
+      >
+        <div className="cert-img-wrap">
+          {image ? (
+            <img
+              src={image}
+              alt={`${name} certificate`}
+              className="cert-img"
+              draggable={false}
+            />
+          ) : (
+            <div className="cert-img-placeholder">
+              <svg width="38" height="38" viewBox="0 0 36 36" fill="none">
+                <rect x="4" y="6" width="28" height="22" rx="2" stroke="white" strokeWidth="1.4"/>
+                <path d="M11 28l3-4 4 5 4-3 3 2" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="13" cy="14" r="2.5" stroke="white" strokeWidth="1.4"/>
+              </svg>
+              <span>certificate image</span>
+            </div>
+          )}
+          <div className="cert-overlay" />
+        </div>
+
+        <div className="cert-info">
+          <div className="cert-top">
+            <div className="cert-issuer-row">
+              <span className="cert-dot" />
+              <span className="cert-issuer">{issuer}</span>
+            </div>
+            <span className="cert-num">{String(id).padStart(2, '0')}</span>
+          </div>
+          <p className="cert-name">{name}</p>
+          <div className="cert-divider" />
+          <div className="cert-footer">
+            <div className="cert-meta">
+              <span className="cert-year">{year}</span>
+              <span className="cert-sep">·</span>
+              <span className="cert-badge">{platform}</span>
+            </div>
+            <span className="cert-arrow">↗</span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>  
+
       {/* 5. CREATIVE WORK / GALLERY */}
-      <section id="creative-work" className="gallery">
+      <section id="projects" className="gallery">
         <img src="/assets/archive.png" alt="Creative Work"
           className="archive__image reveal w-[90%] md:w-[80%] lg:w-full" />
         <h2 className="section-title reveal text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(3rem,10vw,7rem)]">Projects</h2>
