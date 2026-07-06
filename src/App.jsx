@@ -609,8 +609,8 @@ export default function App() {
           ['#intro', 'Intro'],
           ['#about', 'About'],
           ['#services', 'Services'],
-          ['#projects', 'Projects'],
           ['#certifications', 'Certificates'],
+          ['#projects', 'Projects'],
           ['#contact', 'Contact'],
         ].map(([href, label]) => (
           <a
